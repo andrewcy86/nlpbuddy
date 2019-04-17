@@ -108,13 +108,14 @@ def analyze_text(text):
         parser = PlaintextParser.from_string(text,Tokenizer("english"))
         # Using LexRank
         summarizer = LexRankSummarizer()
-        #Summarize the document with 2 sentences
-        summary = summarizer(parser.document, 2)
+        #Summarize the document with 5 sentences
+        summary = summarizer(parser.document, 5)
+        s = ''
         for sentence in summary:
-            ret['summary'] = str(sentence)
-    except ValueError:  # why does it break in short sentences?
-        ret['summary'] = ''
-
+            s+= str(sentence)
+            ret['summary'] = s
+    except ValueError:
+        pass
     # top 10 most frequent keywords, based on tokens lemmatization
     frequency = defaultdict(int)
     lexical_attrs = {
