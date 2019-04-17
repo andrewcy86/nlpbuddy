@@ -111,7 +111,7 @@ def analyze_text(text):
         #Summarize the document with 2 sentences
         summary = summarizer(parser.text, 2)
         for sentence in summary:
-        ret['summary'] = print(sentence)
+            ret['summary'] = print(sentence)
     except ValueError:  # why does it break in short sentences?
         ret['summary'] = ''
 
