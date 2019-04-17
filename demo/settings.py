@@ -161,7 +161,7 @@ for language in SUPPORTED_LANGUAGES:
     except OSError:
         print('Warning: model {} not found. Run python3 -m spacy download {} and try again.'.format(language,language))
 
-LANGUAGE_MODELS['el'] = spacy.load('el_core_web_sm')
+LANGUAGE_MODELS['el'] = spacy.load('el_core_news_sm')
 LANGUAGE_MODELS['en'] = spacy.load('en_core_web_sm')
 
 # this is used to display the language name
