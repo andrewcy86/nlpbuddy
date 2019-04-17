@@ -121,7 +121,7 @@ def analyze_text(text):
         summary = summarizer(parser.document, 5)
         s = ''
         for sentence in summary:
-            s+= str(sentence)
+            s+= ' '.str(sentence)
             ret['summary'] = s
     except ValueError:
         pass
