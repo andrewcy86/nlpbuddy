@@ -119,13 +119,13 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 MEDIA_URL='/media/'
-STATIC_ROOT = BASE_DIR + '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR,  'static')]
 MEDIA_ROOT = BASE_DIR + '/media/'
 
 
 CORS_ORIGIN_ALLOW_ALL = True
 
-ALLOWED_HOSTS = ['nlp.wordgames.gr', 'localhost', 'nlpbuddy.io', 'www.nlpbuddy.io']
+ALLOWED_HOSTS = ['localhost']
 
 LOGGING = {
     'version': 1,
@@ -186,3 +186,4 @@ DEBUG = False
 # library python-readability fetches text from a URL 
 # and BeautifulSoup parses/removes tags
 ALLOW_URL_IMPORTS = True
+DEBUG = True
