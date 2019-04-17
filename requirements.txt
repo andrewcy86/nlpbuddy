@@ -8,3 +8,4 @@ requests
 readability-lxml
 bs4
 pandas
+sumy
