@@ -105,7 +105,16 @@ def analyze_text(text):
             pass
 
     try:
-        parser = PlaintextParser.from_string(text,Tokenizer("english"))
+        # Strip Bad Characters       
+        bad_chars = ['\n','\xc2','\xb7','\xce','\xbc','\x8e','\x8b','\x9f','\xe2','\x8e','\x9c', '\xe2', '\x80', '\x93', '\x9d', '\xc2', '\xb5', '\x88', '\x92', '\xa4', '\x97', '\xa2','\xa5','\x97','\x91','\xa2','/','\\','\"','\'']
+
+        rx = '[' + re.escape(''.join(bad_chars)) + ']'
+
+        textpre = re.sub(rx, '', text)
+
+        textpost = re.sub("[\n\r]+", "", textpre)
+        
+        parser = PlaintextParser.from_string(textpost,Tokenizer("english"))
         # Using LexRank
         summarizer = LexRankSummarizer()
         #Summarize the document with 5 sentences
