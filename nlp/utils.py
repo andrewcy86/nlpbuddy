@@ -9,8 +9,10 @@ from gensim.summarization import summarize
 import pandas as pd
 import operator
 import re
-
-
+import sumy
+from sumy.parsers.plaintext import PlaintextParser
+from sumy.nlp.tokenizers import Tokenizer
+from sumy.summarizers.lex_rank import LexRankSummarizer
 
 fasttext_path = '/opt/demo-app/fastText/fasttext'
 
@@ -103,7 +105,13 @@ def analyze_text(text):
             pass
 
     try:
-        ret['summary'] = summarize(text)
+        parser = PlaintextParser.from_string(text,Tokenizer("english"))
+        # Using LexRank
+        summarizer = LexRankSummarizer()
+        #Summarize the document with 2 sentences
+        summary = summarizer(parser.text, 2)
+        for sentence in summary:
+        ret['summary'] = print(sentence)
     except ValueError:  # why does it break in short sentences?
         ret['summary'] = ''
 
