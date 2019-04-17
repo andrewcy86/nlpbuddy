@@ -109,7 +109,7 @@ def analyze_text(text):
         # Using LexRank
         summarizer = LexRankSummarizer()
         #Summarize the document with 2 sentences
-        summary = summarizer(parser.text, 2)
+        summary = summarizer(parser.document, 2)
         for sentence in summary:
             ret['summary'] = print(sentence)
     except ValueError:  # why does it break in short sentences?
