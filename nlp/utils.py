@@ -14,7 +14,7 @@ from sumy.parsers.plaintext import PlaintextParser
 from sumy.nlp.tokenizers import Tokenizer
 from sumy.summarizers.lex_rank import LexRankSummarizer
 
-fasttext_path = '/opt/demo-app/fastText/fasttext'
+fasttext_path = '/opt/demo-app/demo/fastText/fasttext'
 
 # uncomment for debugging purporses
 import logging
@@ -24,7 +24,7 @@ logging.basicConfig(format=fmt, level=lvl)
 
 
 MODEL_MAPPING = {
-    'el': '/opt/demo-app/demo/el_classiffier.bin'
+    'en': '/opt/demo-app/demo/supervised_classifier_model.bin'
 }
 
 ENTITIES_MAPPING = {
@@ -96,32 +96,23 @@ def analyze_text(text):
 
     ret['text'] = analyzed_text
 
+
     # Text category. Only valid for Greek text for now
-    if language == 'el':
+    if language == 'en':
         ret.update(sentiment_analysis(doc))
         try:
             ret['category'] = predict_category(text, language)
         except Exception:
             pass
-
     try:
-        # Strip Bad Characters       
-        bad_chars = ['\n','\xc2','\xb7','\xce','\xbc','\x8e','\x8b','\x9f','\xe2','\x8e','\x9c', '\xe2', '\x80', '\x93', '\x9d', '\xc2', '\xb5', '\x88', '\x92', '\xa4', '\x97', '\xa2','\xa5','\x97','\x91','\xa2','/','\\','\"','\'']
-
-        rx = '[' + re.escape(''.join(bad_chars)) + ']'
-
-        textpre = re.sub(rx, '', text)
-
-        textpost = re.sub("[\n\r]+", "", textpre)
-        
-        parser = PlaintextParser.from_string(textpost,Tokenizer("english"))
+        parser = PlaintextParser.from_string(text,Tokenizer("english"))
         # Using LexRank
         summarizer = LexRankSummarizer()
         #Summarize the document with 5 sentences
         summary = summarizer(parser.document, 5)
         s = ''
         for sentence in summary:
-            s+= str(sentence) + ' '
+            s+= str(sentence)
             ret['summary'] = s
     except ValueError:
         pass
