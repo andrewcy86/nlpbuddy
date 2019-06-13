@@ -112,6 +112,10 @@ def analyze_text(text):
         summary = summarizer(parser.document, 5)
         s = ''
         for sentence in summary:
+            #Text Cleaning 
+            bad_chars = ['\xe2', '/n', '/', '\\', '\x80', '\xa2']
+            rx = '[' + re.escape(''.join(bad_chars)) + ']'
+            sentence = re.sub(rx, '', sentence)
             s+= str(sentence)
             ret['summary'] = s
     except ValueError:
