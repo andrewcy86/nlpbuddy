@@ -24,7 +24,7 @@ logging.basicConfig(format=fmt, level=lvl)
 
 
 MODEL_MAPPING = {
-    'en': '/opt/demo-app/demo/supervised_classifier_model.bin'
+    'en': '/opt/demo-app/demo/model_records1.bin'
 }
 
 ENTITIES_MAPPING = {
@@ -105,6 +105,10 @@ def analyze_text(text):
         except Exception:
             pass
     try:
+        #Text Cleaning 
+        bad_chars = ['\xe2', '/n', '/', '\\', '\x80', '\xa2']
+        rx = '[' + re.escape(''.join(bad_chars)) + ']'
+        text = re.sub(rx, '', text)
         parser = PlaintextParser.from_string(text,Tokenizer("english"))
         # Using LexRank
         summarizer = LexRankSummarizer()
@@ -112,10 +116,6 @@ def analyze_text(text):
         summary = summarizer(parser.document, 5)
         s = ''
         for sentence in summary:
-            #Text Cleaning 
-            bad_chars = ['\xe2', '/n', '/', '\\', '\x80', '\xa2']
-            rx = '[' + re.escape(''.join(bad_chars)) + ']'
-            sentence = re.sub(rx, '', sentence)
             s+= str(sentence)
             ret['summary'] = s
     except ValueError:
