@@ -186,4 +186,3 @@ DEBUG = False
 # library python-readability fetches text from a URL 
 # and BeautifulSoup parses/removes tags
 ALLOW_URL_IMPORTS = True
-DEBUG = True
