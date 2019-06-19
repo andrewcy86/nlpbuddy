@@ -125,7 +125,7 @@ MEDIA_ROOT = BASE_DIR + '/media/'
 
 CORS_ORIGIN_ALLOW_ALL = True
 
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = ['localhost', 'ecms-cis-nlpbuddy.edap-cluster.com']
 
 LOGGING = {
     'version': 1,
