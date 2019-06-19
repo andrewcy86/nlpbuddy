@@ -125,7 +125,7 @@ def analyze_text(text):
             p = re.compile(r'<.*?>')    
             return p.sub('', data)
 
-        for ch in ['\\a','\\b', '\\t', '\\n', '\\v', '\\f', '\\r']:
+        for ch in ['\\a','\\b', '\\t', '\\n', '\\v', '\\f', '\\r', '\\xe2', '\\x80', '\\xc2', '\\xb7', '\\x9c', '\\x9d', '\\x93']:
             if ch in text:
                 text=text.replace(ch,"")
         text = re.sub(r'(.*)/USEPA/US@EPA',r'', cleanMe(text))
