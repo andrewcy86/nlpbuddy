@@ -1,8 +1,8 @@
 import os
 import tempfile
+from functions import cleanMe
 from subprocess import check_output
 from collections import defaultdict
-
 from django.conf import settings
 from spacy import displacy
 from gensim.summarization import summarize
@@ -13,8 +13,6 @@ import sumy
 from sumy.parsers.plaintext import PlaintextParser
 from sumy.nlp.tokenizers import Tokenizer
 from sumy.summarizers.lex_rank import LexRankSummarizer
-from bs4 import BeautifulSoup
-from bs4 import Comment
 
 fasttext_path = '/opt/demo-app/demo/fastText/fasttext'
 
@@ -83,20 +81,6 @@ def analyze_text(text):
     language = settings.LANG_ID.classify(text)[0]
     lang = settings.LANGUAGE_MODELS[language]
     ret = {}
-    def cleanMe(html):
-        soup = BeautifulSoup(html) # create a new bs4 object from the html data loaded
-        for script in soup(["script", "style"]): # remove all javascript and stylesheet code
-            script.extract()
-        # get text
-        text = soup.get_text()
-        # break into lines and remove leading and trailing space on each
-        lines = (line.strip() for line in text.splitlines())
-        # break multi-headlines into a line each
-        chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
-        # drop blank lines
-        text = '\n'.join(chunk for chunk in chunks if chunk)
-        return text
-
     doc = lang(cleanMe(text))
     ret['language'] = settings.LANGUAGE_MAPPING[language]
     # analyzed text containing lemmas, pos and dep. Entities are coloured
@@ -120,20 +104,8 @@ def analyze_text(text):
         except Exception:
             pass
     try:
-        #Text Cleaning
-        def striphtml(data):
-            p = re.compile(r'<.*?>')    
-            return p.sub('', data)
 
-        for ch in ['\\a','\\b', '\\t', '\\n', '\\v', '\\f', '\\r', '\\xe2', '\\x80', '\\xc2', '\\xb7', '\\x9c', '\\x9d', '\\x93']:
-            if ch in text:
-                text=text.replace(ch,"")
-        text = re.sub(r'(.*)/USEPA/US@EPA',r'', cleanMe(text))
-        text = re.sub(r'[^\x00-\x7f]',r'', text)
-        bad_chars = [';', ',', '*']
-        rx = '[' + re.escape(''.join(bad_chars)) + ']'
-        text = re.sub(rx, '', striphtml(text))
-        parser = PlaintextParser.from_string(text,Tokenizer("english"))
+        parser = PlaintextParser.from_string(cleanMe(text),Tokenizer("english"))
 
         # Using LexRank
         summarizer = LexRankSummarizer()
