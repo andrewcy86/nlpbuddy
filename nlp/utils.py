@@ -110,7 +110,7 @@ def analyze_text(text):
         # Using LexRank
         summarizer = LexRankSummarizer()
         #Summarize the document with 5 sentences
-        summary = summarizer(parser.document, 5)
+        summary = summarizer(parser.document, 20)
         s = ''
         for sentence in summary:
             s+= ' ' + str(sentence)
