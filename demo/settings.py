@@ -151,7 +151,7 @@ import spacy
 # load any spaCy models that are installed
 # this takes some time to load so doing it here and hopefully this improves performance
 
-SUPPORTED_LANGUAGES = ['de', 'es', 'pt', 'fr', 'it', 'nl']
+SUPPORTED_LANGUAGES = ['de', 'es', 'pt', 'fr', 'it']
 
 LANGUAGE_MODELS = {}
 
@@ -172,8 +172,7 @@ LANGUAGE_MAPPING = {
         'es': 'Spanish',
         'pt': 'Portuguese',
         'fr': 'French',
-        'it': 'Italian',
-        'nl': 'Dutch',
+        'it': 'Italian'
 }
 
 # this is used for language identification. Loading here to avoid importing many times
