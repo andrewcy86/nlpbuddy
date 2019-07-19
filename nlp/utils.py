@@ -114,7 +114,7 @@ def analyze_text(text):
         s = ''
         for sentence in summary:
             s+= ' ' + str(sentence)
-            ret['summary'] = s + 'test'
+            ret['summary'] = s
     except ValueError:
         pass
     # top 10 most frequent keywords, based on tokens lemmatization
