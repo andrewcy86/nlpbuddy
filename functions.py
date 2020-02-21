@@ -24,7 +24,7 @@ def cleanMe(html):
             text=text.replace(ch,"")
     text = re.sub(r'(.*)/USEPA/US@EPA',r'', text)
     text = re.sub(r'[^\x00-\x7f]',r'', text)
-    bad_chars = [';', ',', '*', '\'', '\"', '\\', '/']
+    bad_chars = [':', ';', ',', '*', '\'', '\"', '\\', '/']
     rx = '[' + re.escape(''.join(bad_chars)) + ']'
     text = re.sub(rx, '', striphtml(text))
 
